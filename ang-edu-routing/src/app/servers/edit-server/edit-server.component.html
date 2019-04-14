@@ -4,14 +4,14 @@
     type="text"
     id="name"
     class="form-control"
-    [(ngModel)]="serverName">
+    ngModel="serverName">
 </div>
 <div class="form-group">
   <label for="status">Server Status</label>
   <select
     id="status"
     class="form-control"
-    [(ngModel)]="serverStatus">
+    ngModel="serverStatus">
     <option value="online">Online</option>
     <option value="offline">Offline</option>
   </select>
