@@ -1,12 +1,11 @@
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { Ingredient } from '../shared/ingedient.model';
 
 export class ShoppingListService {
-  ingredientChanged = new Subject<Ingredient[]>();
-
+  ingredientsChanged = new Subject<Ingredient[]>();
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 10)
+    new Ingredient('Tomatoes', 10),
   ];
 
   getIngredients() {
@@ -15,14 +14,14 @@ export class ShoppingListService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    this.ingredientChanged.next(this.getIngredients());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
-  addIngredients(ingreds: Ingredient[]) {
-    // for (let ingred of ingreds){
-    //   this.addIngredient(ingred);
+  addIngredients(ingredients: Ingredient[]) {
+    // for (let ingredient of ingredients) {
+    //   this.addIngredient(ingredient);
     // }
-    this.ingredients.push(...ingreds);
-    this.ingredientChanged.next(this.ingredients.slice());
+    this.ingredients.push(...ingredients);
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 }
