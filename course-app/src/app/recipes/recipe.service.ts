@@ -2,9 +2,12 @@ import { Recipe } from './recipe.model';
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingedient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class RecipeService {
+  recipesChanges = new Subject<Recipe[]>();
+
   private recipes: Recipe[] = [
     new Recipe('A test recipe', 'This is simply a test',
     'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/gfkids_maccheese.jpg',
@@ -32,5 +35,20 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingreds: Ingredient[]) {
     this.slService.addIngredients(ingreds);
+  }
+
+  addRecipe(recipe: Recipe) {
+    this.recipes.push(recipe);
+    this.recipesChanges.next(this.recipes.slice());
+  }
+
+  updateRecipe(index: number, newRecipe: Recipe) {
+    this.recipes[index] = newRecipe;
+    this.recipesChanges.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
+    this.recipesChanges.next(this.recipes.slice());
   }
 }
